@@ -13,7 +13,6 @@ class InsuranceCombiner(object):
         self.Api1Wrapper = Api1Wrapper(api_1_key)
         self.Api2Wrapper = Api2Wrapper(api_1_key)
         self.Api3Wrapper = Api3Wrapper(api_1_key)
-        self.api_wrappers = [self.Api1Wrapper, self.Api2Wrapper, self.Api3Wrapper]
 
     def get_plan_averages(self, member_id):
         # I wanted to make this faster by concurrently calling each api
