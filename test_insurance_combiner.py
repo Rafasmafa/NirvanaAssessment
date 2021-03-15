@@ -16,7 +16,15 @@ class TestInsuranceCombiner(unittest.TestCase):
         self.assertEqual(plan_averages,
             {'deductible': 1066, 'stop_loss': 11000, 'oop_max': 5666})
 
-    def test_get_plan_averages_bad_response(self):
+    @patch('api_wrappers.api_1.Api1Wrapper.insurance_plan_summary', new=bad_response)
+    @patch('api_wrappers.api_2.Api2Wrapper.insurance_plan_summary', new=bad_response)
+    @patch('api_wrappers.api_3.Api3Wrapper.insurance_plan_summary', new=bad_response)
+    def test_get_plan_averages_all_bad_responses(self):
+        plan_averages = self.combiner.get_plan_averages('123')
+        self.assertEqual(plan_averages,
+            {'deductible': None, 'oop_max': None, 'stop_loss': None})
+
+    def test_get_plan_averages_single_bad_response(self):
         with patch('api_wrappers.api_1.Api1Wrapper.insurance_plan_summary', new=bad_response):
             plan_averages = self.combiner.get_plan_averages('123')
             self.assertEqual(plan_averages,
@@ -47,7 +55,15 @@ class TestInsuranceCombiner(unittest.TestCase):
         self.assertEqual(plan_averages,
             {'deductible': 1000, 'oop_max': 5000, 'stop_loss': 10000})
 
-    def test_get_plan_mins_bad_response(self):
+    @patch('api_wrappers.api_1.Api1Wrapper.insurance_plan_summary', new=bad_response)
+    @patch('api_wrappers.api_2.Api2Wrapper.insurance_plan_summary', new=bad_response)
+    @patch('api_wrappers.api_3.Api3Wrapper.insurance_plan_summary', new=bad_response)
+    def test_get_plan_mins_all_bad_responses(self):
+        plan_averages = self.combiner.get_plan_averages('123')
+        self.assertEqual(plan_averages,
+            {'deductible': None, 'oop_max': None, 'stop_loss': None})
+
+    def test_get_plan_mins_single_bad_response(self):
         with patch('api_wrappers.api_1.Api1Wrapper.insurance_plan_summary', new=bad_response):
             plan_averages = self.combiner.get_plan_min('123')
             self.assertEqual(plan_averages,
@@ -78,7 +94,15 @@ class TestInsuranceCombiner(unittest.TestCase):
         self.assertEqual(plan_averages,
             {'deductible': 1200, 'oop_max': 6000, 'stop_loss': 13000})
 
-    def test_get_plan_max_bad_response(self):
+    @patch('api_wrappers.api_1.Api1Wrapper.insurance_plan_summary', new=bad_response)
+    @patch('api_wrappers.api_2.Api2Wrapper.insurance_plan_summary', new=bad_response)
+    @patch('api_wrappers.api_3.Api3Wrapper.insurance_plan_summary', new=bad_response)
+    def test_get_plan_max_all_bad_responses(self):
+        plan_averages = self.combiner.get_plan_averages('123')
+        self.assertEqual(plan_averages,
+            {'deductible': None, 'oop_max': None, 'stop_loss': None})
+
+    def test_get_plan_max_single_bad_response(self):
         with patch('api_wrappers.api_1.Api1Wrapper.insurance_plan_summary', new=bad_response):
             plan_averages = self.combiner.get_plan_max('123')
             self.assertEqual(plan_averages,
